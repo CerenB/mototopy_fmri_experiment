@@ -16,17 +16,20 @@ function [cfg] = setParameters()
 
     %% Debug mode settings
 
-    cfg.debug.do = false; % To test the script out of the scanner, skip PTB sync
-    cfg.debug.smallWin = false; % To test on a part of the screen, change to 1
-    cfg.debug.transpWin = false; % To test with trasparent full size screen
+    % To test the script out of the scanner, skip PTB sync
+    cfg.debug.do = false; 
+    % To test on a part of the screen, change to 1
+    cfg.debug.smallWin = false; 
+    % To test with trasparent full size screen
+    cfg.debug.transpWin = false; 
 
     cfg.verbose = 1;
 
     cfg.skipSyncTests = 1; % 0 
     
-    %% TASK - quick fix for now
-    % brutally saying no target - no task?
-    cfg.audio.noTask = 0;
+%     %% TASK - quick fix for now
+%     % brutally saying no target - no task?
+%     cfg.audio.noTask = 0;
     
     %% Engine parameters
 
@@ -86,15 +89,13 @@ function [cfg] = setParameters()
     %% Task(s)
 
     % task name 
-    cfg.task.name = 'somatotopy';
+    cfg.task.name = 'mototopy';
      % it won't ask you about group or session
     cfg.subject.askGrpSess = [0 0];
 
     % Instruction
-    cfg.task.instruction = 'Count how many "no brushing trials"\n Press during gaps, how many you detected! \n\n';
-    if cfg.audio.noTask
-        cfg.task.instruction = 'Please pay attention to the stimulated body part\n  \n\n';
-    end
+    cfg.task.instruction = 'Please MOVE in a given pace\n   the indicated body parts\n\n';
+
     
     % Fixation cross (in pixels)
     cfg.fixation.type = 'cross';
@@ -133,9 +134,9 @@ function [cfg] = setParameters()
     % more often beeps?
     % alternative - with more beeps within 1 s
     cfg.audio.moreBeeps = 0;
-    
-    % silent task? so no frequency beeps, but silence during block
-    cfg.audio.silentTask = 1;
+%     
+%     % silent task? so no frequency beeps, but silence during block
+%     cfg.audio.silentTask = 1;
     
 end
 
@@ -168,10 +169,7 @@ cfg.mri.triggerNb = 1;
 % json sidecar file for bold data
 cfg.mri.repetitionTime = 1.75;
 
-cfg.bids.MRI.Instructions = 'Counting no-brush trials';
-if cfg.audio.noTask
-    cfg.bids.MRI.Instructions = 'Passively paying attention thr stimuli';
-end
+cfg.bids.MRI.Instructions = 'Moving body parts';
 
 cfg.bids.MRI.TaskDescription = [];
 cfg.bids.mri.SliceTiming = [0, 0.9051, 0.0603, 0.9655, 0.1206, 1.0258, 0.181, ...
@@ -191,8 +189,9 @@ cfg.timing.onsetDelay = 4 *cfg.mri.repetitionTime; %7
 cfg.timing.endDelay = 5 * cfg.mri.repetitionTime; %8.75
 
 % beginning of exp, give experimenter a cue to get ready for tactile stim
-cfg.timing.experimenterCueOnsetDelay = 2; % in s
-cfg.timing.afterCueOnsetDelay = cfg.timing.onsetDelay - cfg.timing.experimenterCueOnsetDelay;
+%audio cue for participant to move which body part
+cfg.timing.audioCueDuration = 2; % in s
+cfg.timing.participantWaitForCue = cfg.timing.onsetDelay - cfg.timing.audioCueDuration; % in s
 
 % % % currently not used % % %
 % ending timings for fMRI

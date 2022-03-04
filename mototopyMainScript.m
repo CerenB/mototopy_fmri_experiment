@@ -52,8 +52,8 @@ try
     getResponse('start', cfg.keyboard.responseBox);
 
     % after this wait time, exp hears the audio cue for which body part to
-    % brush
-    waitFor(cfg, cfg.timing.experimenterCueOnsetDelay);
+    % move
+    waitFor(cfg, cfg.timing.participantWaitForCue);
      
     %% For Each Block
 
@@ -61,17 +61,15 @@ try
 
         fprintf('\n - Running block %s \n', cfg.design.blockNamesOrder{iBlock}); 
         
+        % now wait up till 2s left and play the cue, then go directly to
+        % the event - 
+        if iBlock ~= 1
+            % wait time after auditory cue for beginning of exp
+            waitFor(cfg, cfg.timing.IBI(iBlock) - cfg.timing.audioCueDuration);
+        end
+        
         % experimenter's cue to know where to stimulate
         [thisBlock]  = playCueAudio(cfg, iBlock);
-
-        if iBlock == 1
-            % wait time after auditory cue for beginning of exp
-            waitFor(cfg, cfg.timing.afterCueOnsetDelay - thisBlock.cueDuration);
-        else
-            % wait time in between 2 blocks
-            % IBI - the audio cue playing tme (1s)
-            waitFor(cfg, cfg.timing.IBI(iBlock) - thisBlock.cueDuration);
-        end
         
         for iEvent = 1:cfg.design.nbEventsPerBlock
 
@@ -81,7 +79,6 @@ try
             checkAbort(cfg, cfg.keyboard.keyboard);
 
             [thisEvent, thisFixation, cfg] = preTrialSetup(cfg, iBlock, thisBlock, iEvent);
-
 
             % play the sounds and collect onset and duration of the event
             [onset, duration] = doAudioVisual(cfg, thisEvent, thisFixation);
@@ -100,8 +97,6 @@ try
             responseEvents = getResponse('check', cfg.keyboard.responseBox, cfg);
             collectAndSave(responseEvents, cfg, logFile, cfg.experimentStart);
 
-%            waitFor(cfg, cfg.timing.ISI);
-
         end
         
     end
@@ -117,8 +112,7 @@ try
     getResponse('stop', cfg.keyboard.responseBox);
     getResponse('release', cfg.keyboard.responseBox);
 
-    % createJson(cfg, cfg);
-    % think about the below
+    % create json for bold
     createJson(cfg, 'func');
 
     farewellScreen(cfg);
