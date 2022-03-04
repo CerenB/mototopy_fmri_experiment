@@ -64,12 +64,18 @@ try
         % now wait up till 2s left and play the cue, then go directly to
         % the event - 
         if iBlock ~= 1
-            % wait time after auditory cue for beginning of exp
-            waitFor(cfg, cfg.timing.IBI(iBlock) - cfg.timing.audioCueDuration);
+            waitFor(cfg, cfg.timing.IBI(iBlock) - cfg.timing.cueDuration);
         end
         
-        % experimenter's cue to know where to stimulate
-        [thisBlock]  = playCueAudio(cfg, iBlock);
+        if cfg.doAudio
+            % participant's audio cue to know where to move
+            [thisBlock]  = playCueAudio(cfg, iBlock);
+        end
+        
+        %participant's visual cue to where where to move
+        if cfg.doVisual
+            bodyPartInfoScreen(cfg, cfg.design.blockNamesOrder{iBlock});
+        end
         
         for iEvent = 1:cfg.design.nbEventsPerBlock
 

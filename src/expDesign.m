@@ -96,52 +96,15 @@ function [cfg] = expDesign(cfg, displayFigs)
     end
     
     %% Give the blocks the names with condition and design the task in each event
-%     while 1
-% 
-%         fixationTargets = zeros(NB_BLOCKS, NB_EVENTS_PER_BLOCK);
-% 
-%         soundTargets = zeros(NB_BLOCKS, NB_EVENTS_PER_BLOCK);
-% 
-%         for iBlock = 1:NB_BLOCKS
-% 
-%             % Set target
-%             % - if there are 2 targets per block we make sure that they are at least
-%             % 2 events apart
-%             % - targets cannot be on the first event of a block
-% 
-%             nbTarget = numTargetsForEachBlock(iBlock);
-% 
-%             % Fixation targets
-%             forbiddenPositions = [];
-%             chosenPosition = setTargetPositionInSequence( ...
-%                                                          NB_EVENTS_PER_BLOCK, ...
-%                                                          nbTarget, ...
-%                                                          forbiddenPositions);
-% 
-%             fixationTargets(iBlock, chosenPosition) = 1;
-% 
-%             % Sound targets
-%             forbiddenPositions = [1, NB_EVENTS_PER_BLOCK];
-%             chosenPosition = setTargetPositionInSequence( ...
-%                                                          NB_EVENTS_PER_BLOCK, ...
-%                                                          nbTarget, ...
-%                                                          forbiddenPositions);
-% 
-%             soundTargets(iBlock, chosenPosition) = 1;
-% 
-% 
-%         end
-% 
-%         % Check that fixation and shorter sound are not presented in the same event
-%         if max(unique(fixationTargets + soundTargets)) < 2
-%             break
-%         end
-% 
-%     end
     
-    % quick fix - for mototopy task is moving - periodically move
+    % doVisual - do metronome visually
     % so all trials are "target" for fixation cross
-    fixationTargets = ones(NB_BLOCKS, NB_EVENTS_PER_BLOCK);
+    fixationTargets = zeros(NB_BLOCKS, NB_EVENTS_PER_BLOCK);
+    if cfg.doVisual
+        fixationTargets = ones(NB_BLOCKS, NB_EVENTS_PER_BLOCK);
+    end
+    
+    % no audio target - no task
     soundTargets = zeros(NB_BLOCKS, NB_EVENTS_PER_BLOCK);
     %%  set jitter 
     %calculate an array of jittered IBI   

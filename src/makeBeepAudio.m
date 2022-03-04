@@ -58,6 +58,12 @@ eventNoTarget = eventNoTarget.*amplitude;
 cfg.soundData.eventNoTarget = eventNoTarget;
 
 
+% stupid fix - change it LATER
+% if don't do audio, then play silences for 12times
+if ~cfg.doAudio
+    cfg.soundData.eventNoTarget = zeros(1,length(eventNoTarget));
+end
+
 % % to visualise 1 pattern
 % figure; plot(t,eventTarget);
 

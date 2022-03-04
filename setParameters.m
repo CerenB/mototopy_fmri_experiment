@@ -27,10 +27,6 @@ function [cfg] = setParameters()
 
     cfg.skipSyncTests = 1; % 0 
     
-%     %% TASK - quick fix for now
-%     % brutally saying no target - no task?
-%     cfg.audio.noTask = 0;
-    
     %% Engine parameters
 
     cfg.testingDevice = 'mri';
@@ -70,7 +66,6 @@ function [cfg] = setParameters()
     
     % we will model 1 block in GLM, we need a block duration in logfile
 
-
     cfg.timing.eventDuration = 1; % second
 
     % Time between blocs in secs, here set as default
@@ -93,6 +88,9 @@ function [cfg] = setParameters()
      % it won't ask you about group or session
     cfg.subject.askGrpSess = [0 0];
 
+    cfg.doAudio = 0;
+    cfg.doVisual = 1;
+    
     % Instruction
     cfg.task.instruction = 'Please MOVE in a given pace\n   the indicated body parts\n\n';
 
@@ -134,9 +132,6 @@ function [cfg] = setParameters()
     % more often beeps?
     % alternative - with more beeps within 1 s
     cfg.audio.moreBeeps = 0;
-%     
-%     % silent task? so no frequency beeps, but silence during block
-%     cfg.audio.silentTask = 1;
     
 end
 
@@ -190,18 +185,10 @@ cfg.timing.endDelay = 5 * cfg.mri.repetitionTime; %8.75
 
 % beginning of exp, give experimenter a cue to get ready for tactile stim
 %audio cue for participant to move which body part
-cfg.timing.audioCueDuration = 2; % in s
-cfg.timing.participantWaitForCue = cfg.timing.onsetDelay - cfg.timing.audioCueDuration; % in s
+% both visual and audio cue duration equal
+cfg.timing.cueDuration = 2; 
+cfg.timing.participantWaitForCue = cfg.timing.onsetDelay - cfg.timing.cueDuration; % in s
 
-% % % currently not used % % %
-% ending timings for fMRI
-%end the screen after thank you screen
-cfg.timing.endScreenDelay = 2; 
-% delay for script ending
-% waiting time for participants responding how many times they detected the
-% velocity change
-cfg.timing.endResponseDelay = 10; 
-% % % % % % % %
 
 
 end
