@@ -1,12 +1,8 @@
-function onset  = playBeepAudio(cfg, thisEvent)
+function onset  = playBeepAudio(cfg)
 
     %% Get parameters        
     soundData = cfg.soundData;
     fieldName = 'eventNoTarget';
-
-    if thisEvent.soundTarget == 1
-        fieldName = 'eventTarget';
-    end
     
     sound = soundData.(fieldName);
 

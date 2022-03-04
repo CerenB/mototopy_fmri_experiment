@@ -18,7 +18,7 @@ function [onset, duration] = doAudioVisual(cfg, thisEvent, thisFixation)
     %% Get parameters
 
     % experimenter beep sound event
-    onset = playBeepAudio(cfg, thisEvent);
+    onset = playBeepAudio(cfg);
 
     % draw first fixation and get a first visual time stamp
     % ideally we would want to synch that first time stamp and the sound start
