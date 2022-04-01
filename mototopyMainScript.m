@@ -59,7 +59,8 @@ try
 
     for iBlock = 1:cfg.design.nbBlocks
 
-        fprintf('\n - Running block %s \n', cfg.design.blockNamesOrder{iBlock}); 
+        fprintf('\n - Running block %d, %s \n', iBlock, ...
+                cfg.design.blockNamesOrder{iBlock}); 
         
         % now wait up till 2s left and play the cue, then go directly to
         % the event - 
@@ -69,12 +70,16 @@ try
         
         if cfg.doAudio
             % participant's audio cue to know where to move
-            [thisBlock]  = playCueAudio(cfg, iBlock);
+            [thisBlock] = playCueAudio(cfg, iBlock);
+            if cfg.timing.cueDuration > 2
+                waitFor(cfg, cfg.timing.cueDuration - thisBlock.cueDuration)
+            end
         end
         
         %participant's visual cue to where where to move
         if cfg.doVisual
-            bodyPartInfoScreen(cfg, cfg.design.blockNamesOrder{iBlock});
+            % display the cue till cueDuration is over
+            [thisBlock] = bodyPartInfoScreen(cfg, cfg.design.blockNamesOrder{iBlock}); 
         end
         
         for iEvent = 1:cfg.design.nbEventsPerBlock
@@ -120,16 +125,19 @@ try
 
     % create json for bold
     createJson(cfg, 'func');
+    
+    % save config info
+    saveCfg(cfg);
 
     farewellScreen(cfg);
 
     cleanUp();
 
 catch
-    
-    % think about adding save option if it crashes
-    % ?
 
+    % save config info
+    saveCfg(cfg);
+    
     cleanUp();
     psychrethrow(psychlasterror);
 

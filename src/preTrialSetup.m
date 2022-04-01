@@ -12,15 +12,14 @@ function varargout = preTrialSetup(varargin)
     thisEvent.blockNb = cfg.design.blockOrder(iBlock);
 
     % save block info into thisEvent structure
-    thisEvent.blockCueOnset = thisBlock.cueOnset;
-    thisEvent.blockCueOnsetEnd = thisBlock.cueOnsetEnd;
-    thisEvent.blockCueDuration = thisBlock.cueDuration;
-    thisEvent.blockCueDuration2 = thisBlock.cueDuration2;
+    thisEvent.cueOnset = thisBlock.cueOnset;
+    thisEvent.cueOnsetEnd = thisBlock.cueOnsetEnd;
+    thisEvent.cueDuration = thisBlock.cueDuration;
+    thisEvent.cueDuration2 = thisBlock.cueDuration2;
     
     % think about calculating duration properly
     if mod(iEvent,12) == 1
         thisEvent.trial_type = ['block_', cfg.design.blockNamesOrder{iBlock}];
-%         thisEvent.duration = 12;
     end
     
 

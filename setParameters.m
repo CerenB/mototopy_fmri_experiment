@@ -21,7 +21,7 @@ function [cfg] = setParameters()
     % To test on a part of the screen, change to 1
     cfg.debug.smallWin = false; 
     % To test with trasparent full size screen
-    cfg.debug.transpWin = false; 
+    cfg.debug.transpWin = true; 
 
     cfg.verbose = 1;
 
@@ -45,14 +45,11 @@ function [cfg] = setParameters()
 
     %% Experiment Design
 
-    cfg.design.blockNames = {'hand','feet','lips'}; 
-%     cfg.design.blockNames = {'hand','feet','nose', 'tongue', ...
-%                             'lips', 'cheek', 'forehead'}; 
-% order is important fur playing cues
-% NEW ORDER [1:7] is hand, feet, lips, tongue, nose, cheek, forehead
+    cfg.design.blockNames = {'hand','feet', 'lips', 'tongue', 'forehead'}; 
+    % NEW ORDER [1:7] is hand, feet, lips, tongue, forehead
 
     % per condition
-    cfg.design.nbRepetitions = 7; % main exp with 7 condition, repetition = 3;
+    cfg.design.nbRepetitions = 4; % main exp with 7 condition, repetition = 3;
 
     % we have 12s block, and we brush in every 1s
     cfg.design.nbEventsPerBlock = 12;
@@ -60,10 +57,9 @@ function [cfg] = setParameters()
     % loudness adjustment
     cfg.amp = 0.95;
     %% Timing - NEED CARE
-    % currently we present audio to the exp during the ISI and IBI
-    % even duration = ISI + beep duration
+    % currently we present audio to the exp during the IBI
+    % even duration = beep duration
     % IBI = has audio cue + silence
-    
     % we will model 1 block in GLM, we need a block duration in logfile
 
     cfg.timing.eventDuration = 1; % second
@@ -75,9 +71,6 @@ function [cfg] = setParameters()
     % jitter do not = an array with constant IBI 
     cfg.timing.doJitter = 1;
 
-%     % Time between events in secs
-%     cfg.timing.ISI = 0.25;
-
     % auditory beeps length in second
     cfg.timing.beepDuration = 0.25; 
 
@@ -88,8 +81,8 @@ function [cfg] = setParameters()
      % it won't ask you about group or session
     cfg.subject.askGrpSess = [0 0];
 
-    cfg.doAudio = 1;
-    cfg.doVisual = 0;
+    cfg.doAudio = 0;
+    cfg.doVisual = 1;
     
     % Instruction
     cfg.task.instruction = 'Please MOVE in a given pace\n   the indicated body parts\n\n';
@@ -99,8 +92,8 @@ function [cfg] = setParameters()
     cfg.fixation.type = 'cross';
     cfg.fixation.colorTarget = cfg.color.red;
     cfg.fixation.color = cfg.color.white;
-    cfg.fixation.width = .25;
-    cfg.fixation.lineWidthPix = 3;
+    cfg.fixation.width = 0.5; %.25
+    cfg.fixation.lineWidthPix = 6; %3
     cfg.fixation.xDisplacement = 0;
     cfg.fixation.yDisplacement = 0;
 
@@ -116,15 +109,15 @@ function [cfg] = setParameters()
                         'fixationTarget', ...
                         'event', ...
                         'block', ...
-                        'blockCueOnset', ...
-                        'blockCueOnsetEnd', ...
-                        'blockCueDuration',...
-                        'blockCueDuration2',...
+                        'cueOnset', ...
+                        'cueOnsetEnd', ...
+                        'cueDuration',...
+                        'cueDuration2',...
                         'keyName'};
                     
     %% Auditory Stimulation
 
-    cfg.audio.channels = 1;
+    cfg.audio.channels = 2;
     
     % repeat body part audio cues twice
     cfg.audio.cueRepeat = 2;
@@ -186,7 +179,7 @@ cfg.timing.endDelay = 5 * cfg.mri.repetitionTime; %8.75
 % beginning of exp, give experimenter a cue to get ready for tactile stim
 %audio cue for participant to move which body part
 % both visual and audio cue duration equal
-cfg.timing.cueDuration = 2; 
+cfg.timing.cueDuration = 3; 
 cfg.timing.participantWaitForCue = cfg.timing.onsetDelay - cfg.timing.cueDuration; % in s
 
 
@@ -199,7 +192,7 @@ function cfg = setMonitor(cfg)
 
 % Text format 
 cfg.text.font         = 'Arial';
-cfg.text.size         = 48;
+cfg.text.size         = 64;
 
 
 % Monitor parameters for PTB
