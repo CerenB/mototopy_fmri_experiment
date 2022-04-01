@@ -5,14 +5,7 @@ function [cfg] = makeBeepAudio(cfg)
 % then make audio with sounds + event silences
 
 fs = cfg.audio.fs(1);
-
 amplitude = cfg.amp;
-
-% refractor to on the moment- creating a pure tone with a given frequency
-% and duration as below:
-% t = [0 : round(cfg.pattern.gridIOIs * cfg.fs)-1]/cfg.fs;
-% % create carrier
-% s = sin(2*pi*currF0*t);
 
 % take no-target beep
 soundNoTarget = cfg.soundData.NT(1,:);
