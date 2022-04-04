@@ -81,8 +81,8 @@ function [cfg] = setParameters()
      % it won't ask you about group or session
     cfg.subject.askGrpSess = [0 0];
 
-    cfg.doAudio = 0;
-    cfg.doVisual = 1;
+    cfg.doAudio = 1;
+    cfg.doVisual = 0;
     
     % Instruction
     cfg.task.instruction = 'Please MOVE in a given pace\n   the indicated body parts\n\n';
