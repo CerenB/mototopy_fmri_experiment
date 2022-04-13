@@ -21,7 +21,7 @@ function [cfg] = setParameters()
     % To test on a part of the screen, change to 1
     cfg.debug.smallWin = false; 
     % To test with trasparent full size screen
-    cfg.debug.transpWin = true; 
+    cfg.debug.transpWin = false; 
 
     cfg.verbose = 1;
 
