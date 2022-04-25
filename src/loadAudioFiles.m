@@ -21,7 +21,7 @@ function [cfg] = loadAudioFiles(cfg)
 
     %% load the cue
     
-    fileName = fullfile('input', 'hand.wav');
+    fileName = fullfile('input', 'hand2.wav');
     [soundData.H, freq(3)] = audioread(fileName);
     soundData.H = soundData.H';
     
@@ -41,7 +41,7 @@ function [cfg] = loadAudioFiles(cfg)
     [soundData.C, freq(7)] = audioread(fileName);
     soundData.C = soundData.C';
 
-    fileName = fullfile('input', 'tongue.wav');
+    fileName = fullfile('input', 'tongue2.wav');
     [soundData.To, freq(8)] = audioread(fileName);
     soundData.To = soundData.To';
 

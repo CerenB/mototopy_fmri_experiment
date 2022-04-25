@@ -179,7 +179,7 @@ cfg.timing.endDelay = 5 * cfg.mri.repetitionTime; %8.75
 % beginning of exp, give experimenter a cue to get ready for tactile stim
 %audio cue for participant to move which body part
 % both visual and audio cue duration equal
-cfg.timing.cueDuration = 3; 
+cfg.timing.cueDuration = 2; 
 cfg.timing.participantWaitForCue = cfg.timing.onsetDelay - cfg.timing.cueDuration; % in s
 
 
