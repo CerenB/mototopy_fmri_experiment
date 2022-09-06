@@ -45,11 +45,15 @@ function [cfg] = setParameters()
 
     %% Experiment Design
 
-    cfg.design.blockNames = {'hand','feet', 'lips', 'tongue', 'forehead'}; 
-    % NEW ORDER [1:7] is hand, feet, lips, tongue, forehead
+    % order is important for playing cues
+    cfg.design.blockNames = {'hand', 'feet', 'lips', 'tongue', 'forehead', 'forehead'}; 
+    % NEW ORDER [1:5] is hand, feet, lips, tongue, forehead
 
+    % have two forehead ! 
+    cfg.design.extraForehead = 1; 
+    
     % per condition
-    cfg.design.nbRepetitions = 4; % main exp with 7 condition, repetition = 3;
+    cfg.design.nbRepetitions = 4; % main exp with 5 condition, repetition = 3;
 
     % we have 12s block, and we brush in every 1s
     cfg.design.nbEventsPerBlock = 12;

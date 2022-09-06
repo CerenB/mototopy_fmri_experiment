@@ -1,36 +1,20 @@
 function [cfg] = expDesign(cfg, displayFigs)
 
     % refractored by CB on 01/02/2022 for Moebius Experiment
-    
-    % Creates the sequence of blocks and the events in them
-    %
-    % The conditions are consecutive static and motion blocks
-    % (Gives better results than randomised).
+    % The conditions are body part blocks in pseudorandomized order
     %
     % Style guide: constants are in SNAKE_UPPER_CASE
     %
     % EVENTS
-    % The numEventsPerBlock should be a multiple of the number of "base"
-    % listed in the MOTION_DIRECTIONS and STATIC_DIRECTIONS (4 at the moment).
-    %  MOTION_DIRECTIONS = [0 90 180 270];
-    %  STATIC_DIRECTIONS = [-1 -1 -1 -1];
+    % repetitions within the block defines the duration of each block
     %
     % Pseudorandomization rules:
-    % (1) Directions are all present in random orders in `numEventsPerBlock/nDirections`
-    % consecutive chunks. This evenly distribute the directions across the
-    % block.
-    % (2) No same consecutive direction
-    %
+    % (1) no consecutive forehead within 5 body parts
+    % (2) No same consecutive body part presentation
     %
     % TARGETS
-    %
-    % Pseudorandomization rules:
-    % (1) If there are 2 targets per block we make sure that they are at least 2
-    % events apart.
-    % (2) Targets cannot be on the first or last event of a block.
-    % (3) Targets can not be present more than 2 times in the same event
-    % position across blocks.
-    %
+    % no targets
+    % 
     % Input:
     % - cfg: parameters returned by setParameters
     % - displayFigs: a boolean to decide whether to show the basic design
@@ -39,13 +23,6 @@ function [cfg] = expDesign(cfg, displayFigs)
     % Output:
     % - ExpParameters.designBlockNames = cell array (nr_blocks, 1) with the
     % name for each block
-    %
-    % - cfg.designDirections = array (nr_blocks, numEventsPerBlock)
-    % with the direction to present in a given block
-    % - 0 90 180 270 indicate the angle
-    % - -1 indicates static
-    %
-    % - cfg.designSpeeds = array (nr_blocks, numEventsPerBlock) * speedEvent;
     %
     % - cfg.designFixationTargets = array (nr_blocks, numEventsPerBlock)
     % showing for each event if it should be accompanied by a target
@@ -146,8 +123,37 @@ function [blockOrder, blockNames, indices] = setBlocks(cfg)
     counter = 1;
     for iRep = 1:NB_REPETITIONS
         
-        blockOrder(iRep,:) = randperm(length(cfg.design.blockNames));
+        % vector of body parts
+        blockOrderToShuffle = length(unique(cfg.design.blockNames));
+        if cfg.design.extraForehead == 1
+            blockOrderToShuffle = [1:length(unique(cfg.design.blockNames)), 5];
+        end
+        
+        % Control 1. prevent consecutive same body part presentation within
+        % a repetition
+        blockDifference = 0;
+        
+        while any(abs(blockDifference) < 1)
+            chosenBlockOrder = Shuffle(blockOrderToShuffle);
+            blockDifference = abs(diff(chosenBlockOrder, [], 2));
+        end
+
+        blockOrder(iRep,:) = chosenBlockOrder;
+        
+        % Control 2 - prevent consecuitive body part across repetitions
+        if (iRep > 1)
+            while blockOrder(iRep,1) == blockOrder(iRep-1,end) || any(abs(blockDifference) < 1)
+                chosenBlockOrder = Shuffle(blockOrderToShuffle);
+                blockDifference = abs(diff(chosenBlockOrder, [], 2));
+                
+                blockOrder(iRep,:) = chosenBlockOrder;
+            end
+        end
+        
+        
+        % now assign the block order and names
         blockNames(counter:(iRep *NB_CONDITION)) = cfg.design.blockNames(blockOrder(iRep,:));
+        
         
         counter = counter + NB_CONDITION;
     end
@@ -160,13 +166,19 @@ function [blockOrder, blockNames, indices] = setBlocks(cfg)
     % not using transpose and
     hand = find(blockOrder == 1);
     feet = find(blockOrder == 2);
-    nose = find(blockOrder == 3);
-    tongue = find(blockOrder == 4);
-    lips = find(blockOrder == 5);
-    cheek = find(blockOrder == 6);
-    forehead = find(blockOrder == 7);
+    tongue = find(blockOrder == 3);
+    lips = find(blockOrder == 4);
+    forehead = find(blockOrder == 5);
 
-    indices = [hand', feet', nose', tongue', lips', cheek', forehead'];
+    if cfg.design.extraForehead == 1
+        forehead2 = forehead(1:2:2*NB_REPETITIONS);
+        forehead = forehead(2:2:2*NB_REPETITIONS);
+        indices = [hand', feet', tongue', lips', forehead', forehead2'];
+    else
+        indices = [hand', feet', tongue', lips', forehead'];
+        
+    end
+    
 
 end
 
