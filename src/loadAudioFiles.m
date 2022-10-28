@@ -22,31 +22,38 @@ function [cfg] = loadAudioFiles(cfg)
     %% load the cue
     
     fileName = fullfile('input', 'hand2.wav');
+    if cfg.do.expInFrench == 1
+        fileName = fullfile('input','pouce_thumb.wav');
+    end
     [soundData.H, freq(3)] = audioread(fileName);
     soundData.H = soundData.H';
     
     fileName = fullfile('input', 'feet.wav');
+    if cfg.do.expInFrench == 1
+        fileName = fullfile('input','orteils_toe.wav');
+    end
     [soundData.Fe, freq(4)] = audioread(fileName);
     soundData.Fe = soundData.Fe';
     
     fileName = fullfile('input', 'forehead.wav');
+    if cfg.do.expInFrench == 1
+        fileName = fullfile('input','front_forehead.wav');
+    end    
     [soundData.Fo, freq(5)] = audioread(fileName);
     soundData.Fo = soundData.Fo';
     
-    fileName = fullfile('input', 'nose.wav');
-    [soundData.N, freq(6)] = audioread(fileName);
-    soundData.N = soundData.N';
-    
-    fileName = fullfile('input', 'cheek.wav');
-    [soundData.C, freq(7)] = audioread(fileName);
-    soundData.C = soundData.C';
-
     fileName = fullfile('input', 'tongue2.wav');
-    [soundData.To, freq(8)] = audioread(fileName);
+    if cfg.do.expInFrench == 1
+        fileName = fullfile('input','langue_tongue.wav');
+    end  
+    [soundData.To, freq(6)] = audioread(fileName);
     soundData.To = soundData.To';
 
     fileName = fullfile('input', 'lips.wav');
-    [soundData.L, freq(9)] = audioread(fileName);
+    if cfg.do.expInFrench == 1
+        fileName = fullfile('input','levres_lips.wav');
+    end  
+    [soundData.L, freq(7)] = audioread(fileName);
     soundData.L = soundData.L';
     
     % load silence of 1s
