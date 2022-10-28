@@ -11,18 +11,6 @@ function onset  = playBeepAudio(cfg)
     PsychPortAudio('FillBuffer', cfg.audio.pahandle, [soundCh1; soundCh2]);
     PsychPortAudio('Start', cfg.audio.pahandle);
     onset = GetSecs;
-
-    % PsychPortAudio('Start', pahandle, repetitions, startCue, waitForDeviceStart);
-
-%     
-%     %% play sequences
-%     % fill the buffer % start sound presentation
-%     PsychPortAudio('FillBuffer', cfg.audio.pahandle, ...
-%         [currSeq.outAudio;currSeq.outAudio]);
-%     
-%     % wait for baseline delays and then start the audio
-%     onset = PsychPortAudio('Start', cfg.audio.pahandle, [], ...
-%         cfg.experimentStart + cfg.timing.onsetDelay,1);
     
     
 end

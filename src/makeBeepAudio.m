@@ -26,23 +26,9 @@ t = [0 : round(eventDuration * fs)-1] / fs;
 eventNoTarget = zeros(1,length(t));
 
 
-if cfg.audio.moreBeeps
-    
-    % no target
-     % define where to insert the sounds
-    idxStart = length(soundNoTarget)+ 1 + length(soundNoTarget);
-    idxEnd = 3 * length(soundNoTarget);
-    
-    %insert sound event
-    eventNoTarget(1:length(soundNoTarget)) = soundNoTarget;
-    eventNoTarget(idxStart:idxEnd) = soundNoTarget;
-    
-else
+%insert no-target sound event
+eventNoTarget(1:length(soundNoTarget)) = soundNoTarget;
 
-    %insert no-target sound event
-    eventNoTarget(1:length(soundNoTarget)) = soundNoTarget;
-
-end
     
 % arrange the almplitude
 eventNoTarget = eventNoTarget.*amplitude;

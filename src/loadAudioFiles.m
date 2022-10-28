@@ -5,18 +5,9 @@ function [cfg] = loadAudioFiles(cfg)
     freq = [];
     
     %load auditory beep sounds
-    % target sound
-    fileName = fullfile('input', '700Hz_250ms.wav');
-    if cfg.audio.moreBeeps
-        fileName = fullfile('input', '554Hz_125ms.wav');
-    end
-    
-    [soundData.T, freq(1)] = audioread(fileName);
-    soundData.T = soundData.T';
-
     % non-target sound
     fileName = fullfile('input', '350Hz_250ms.wav');
-    [soundData.NT, freq(2)] = audioread(fileName);
+    [soundData.NT, freq(1)] = audioread(fileName);
     soundData.NT = soundData.NT';
 
     %% load the cue
@@ -25,35 +16,35 @@ function [cfg] = loadAudioFiles(cfg)
     if cfg.do.expInFrench == 1
         fileName = fullfile('input','pouce_thumb.wav');
     end
-    [soundData.H, freq(3)] = audioread(fileName);
+    [soundData.H, freq(2)] = audioread(fileName);
     soundData.H = soundData.H';
     
     fileName = fullfile('input', 'feet.wav');
     if cfg.do.expInFrench == 1
         fileName = fullfile('input','orteils_toe.wav');
     end
-    [soundData.Fe, freq(4)] = audioread(fileName);
+    [soundData.Fe, freq(3)] = audioread(fileName);
     soundData.Fe = soundData.Fe';
     
     fileName = fullfile('input', 'forehead.wav');
     if cfg.do.expInFrench == 1
         fileName = fullfile('input','front_forehead.wav');
     end    
-    [soundData.Fo, freq(5)] = audioread(fileName);
+    [soundData.Fo, freq(4)] = audioread(fileName);
     soundData.Fo = soundData.Fo';
     
     fileName = fullfile('input', 'tongue2.wav');
     if cfg.do.expInFrench == 1
         fileName = fullfile('input','langue_tongue.wav');
     end  
-    [soundData.To, freq(6)] = audioread(fileName);
+    [soundData.To, freq(5)] = audioread(fileName);
     soundData.To = soundData.To';
 
     fileName = fullfile('input', 'lips.wav');
     if cfg.do.expInFrench == 1
         fileName = fullfile('input','levres_lips.wav');
     end  
-    [soundData.L, freq(7)] = audioread(fileName);
+    [soundData.L, freq(6)] = audioread(fileName);
     soundData.L = soundData.L';
     
     % load silence of 1s
