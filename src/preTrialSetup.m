@@ -10,7 +10,10 @@ function varargout = preTrialSetup(varargin)
     % set block name and targets
     thisEvent.trial_type = cfg.design.blockNamesOrder{iBlock};
     thisEvent.blockNb = cfg.design.blockOrder(iBlock);
-
+    
+    % store block IBI
+    thisEvent.ibi = cfg.timing.IBI(iBlock);
+    
     % save block info into thisEvent structure
     thisEvent.cueOnset = thisBlock.cueOnset;
     thisEvent.cueOnsetEnd = thisBlock.cueOnsetEnd;
