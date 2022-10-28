@@ -44,19 +44,21 @@ function [cfg] = setParameters()
     cfg.pacedByTriggers.do = false;
 
     %% Experiment Design
-
+    cfg.do.expInFrench = 1;
+    
     % order is important for playing cues
-    cfg.design.blockNames = {'hand', 'feet', 'lips', 'tongue', 'forehead', 'forehead'}; 
+    cfg.design.blockNames = {'hand', 'feet', 'lips', 'tongue', 'forehead'}; 
     % NEW ORDER [1:5] is hand, feet, lips, tongue, forehead
 
     % have two forehead ! 
-    cfg.design.extraForehead = 1; 
+    cfg.design.extraForehead = 0; 
     
     % per condition
-    cfg.design.nbRepetitions = 4; % main exp with 5 condition, repetition = 3;
+    cfg.design.nbRepetitions = 2; % main exp with 5 condition, repetition = 3;
 
     % we have 12s block, and we brush in every 1s
-    cfg.design.nbEventsPerBlock = 12;
+    cfg.design.nbEventsPerBlock = 6;
+    
     
     % loudness adjustment
     cfg.amp = 0.95;
@@ -66,7 +68,7 @@ function [cfg] = setParameters()
     % IBI = has audio cue + silence
     % we will model 1 block in GLM, we need a block duration in logfile
 
-    cfg.timing.eventDuration = 1; % second
+    cfg.timing.eventDuration = 2; % second
 
     % Time between blocs in secs, here set as default
     cfg.timing.IBI = 8;
@@ -83,7 +85,7 @@ function [cfg] = setParameters()
     % task name 
     cfg.task.name = 'mototopy';
      % it won't ask you about group or session
-    cfg.subject.askGrpSess = [0 0];
+    cfg.subject.askGrpSess = [1 0];
 
     cfg.doAudio = 1;
     cfg.doVisual = 0;
@@ -102,7 +104,7 @@ function [cfg] = setParameters()
     cfg.fixation.yDisplacement = 0;
 
     % max number of targets within a block
-    cfg.target.maxNbPerBlock = 2;
+    cfg.target.maxNbPerBlock = 1;
     
     % the experimenter will brush not in 1s but in 500ms - higher velocity
     % only used in logfile
