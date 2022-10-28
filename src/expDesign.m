@@ -95,6 +95,12 @@ function [cfg] = expDesign(cfg, displayFigs)
         allIBI = repmat(ibi,1,NB_BLOCKS);
         cfg.timing.IBI = allIBI;
     end
+    
+    % control point 
+    while length(cfg.timing.IBI) ~= NB_BLOCKS  
+        cfg.timing.IBI = [cfg.timing.IBI, ibi];
+        
+    end
     %% Now we do the easy stuff
     
     cfg.design.blockNamesOrder = blockNames;
@@ -124,7 +130,7 @@ function [blockOrder, blockNames, indices] = setBlocks(cfg)
     for iRep = 1:NB_REPETITIONS
         
         % vector of body parts
-        blockOrderToShuffle = length(unique(cfg.design.blockNames));
+        blockOrderToShuffle = 1:length(unique(cfg.design.blockNames));
         if cfg.design.extraForehead == 1
             blockOrderToShuffle = [1:length(unique(cfg.design.blockNames)), 5];
         end
